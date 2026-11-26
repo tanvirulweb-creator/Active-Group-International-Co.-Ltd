@@ -24,6 +24,7 @@ import com.activegroupintl.app.ui.components.BottomNavigationBar
 import com.activegroupintl.app.ui.components.TopAppBarComponent
 import com.activegroupintl.app.ui.components.WhatsAppFab
 import com.activegroupintl.app.ui.navigation.Screen
+import com.activegroupintl.app.ui.screens.AuthScreen
 import com.activegroupintl.app.ui.screens.BookSlotScreen
 import com.activegroupintl.app.ui.screens.CoursesScreen
 import com.activegroupintl.app.ui.screens.DestinationsScreen
@@ -57,42 +58,46 @@ fun MainApp() {
         } catch (_: Exception) { }
     }
 
+    val showTopAndBottomBars = currentRoute != Screen.Auth.route
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBarComponent(
-                onOfficeClick = {
-                    navController.navigate(Screen.Profile.route) {
-                        popUpTo(Screen.Home.route) { saveState = true }
-                        launchSingleTop = true
+            if (showTopAndBottomBars) {
+                TopAppBarComponent(
+                    onOfficeClick = {
+                        navController.navigate(Screen.Profile.route) {
+                            popUpTo(Screen.Home.route) { saveState = true }
+                            launchSingleTop = true
+                        }
+                    },
+                    onNotificationClick = {
+                        navController.navigate(Screen.Home.route)
+                    },
+                    onProfileClick = {
+                        navController.navigate(Screen.Auth.route)
                     }
-                },
-                onNotificationClick = {
-                    // Navigate to home promo
-                    navController.navigate(Screen.Home.route)
-                },
-                onProfileClick = {
-                    navController.navigate(Screen.Profile.route) {
-                        popUpTo(Screen.Home.route) { saveState = true }
-                        launchSingleTop = true
-                    }
-                }
-            )
+                )
+            }
         },
         bottomBar = {
-            BottomNavigationBar(
-                currentRoute = currentRoute,
-                onNavigate = { screen ->
-                    navController.navigate(screen.route) {
-                        popUpTo(Screen.Home.route) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+            if (showTopAndBottomBars) {
+                BottomNavigationBar(
+                    currentRoute = currentRoute,
+                    onNavigate = { screen ->
+                        navController.navigate(screen.route) {
+                            popUpTo(Screen.Home.route) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         floatingActionButton = {
-            WhatsAppFab(onWhatsAppClick = { openWhatsApp() })
+            if (showTopAndBottomBars) {
+                WhatsAppFab(onWhatsAppClick = { openWhatsApp() })
+            }
         }
     ) { innerPadding ->
         NavHost(
@@ -136,6 +141,21 @@ fun MainApp() {
 
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+
+            composable(Screen.Auth.route) {
+                AuthScreen(
+                    onAuthSuccess = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Home.route) { inclusive = true }
+                        }
+                    },
+                    onContinueAsGuest = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Home.route) { inclusive = true }
+                        }
+                    }
+                )
             }
         }
     }
