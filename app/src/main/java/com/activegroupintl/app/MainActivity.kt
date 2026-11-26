@@ -3,8 +3,6 @@ package com.activegroupintl.app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ScrollView
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.tween
@@ -38,11 +36,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Safety uncaught exception handler: if anything crashes, show diagnostic on screen
+        // Safety handler: If any exception occurs anywhere on any thread,
+        // launch CrashActivity in isolated :crash process so the app never freezes on splash screen.
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            android.util.Log.e("AGI_APP", "Uncaught exception on thread ${thread.name}", throwable)
-            runOnUiThread {
-                showCrashUi(throwable)
+            android.util.Log.e("AGI_APP", "Uncaught exception on ${thread.name}", throwable)
+            try {
+                val stackTrace = android.util.Log.getStackTraceString(throwable)
+                val intent = Intent(this@MainActivity, CrashActivity::class.java).apply {
+                    putExtra("crash_error", "Crash on ${thread.name}:\n${throwable.javaClass.simpleName}: ${throwable.message}\n\n$stackTrace")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
+                startActivity(intent)
+                android.os.Process.killProcess(android.os.Process.myPid())
+                System.exit(10)
+            } catch (e: Throwable) {
+                defaultHandler?.uncaughtException(thread, throwable)
             }
         }
 
@@ -54,23 +63,13 @@ class MainActivity : ComponentActivity() {
             }
         } catch (e: Throwable) {
             android.util.Log.e("AGI_APP", "Fatal setContent error", e)
-            showCrashUi(e)
-        }
-    }
-
-    private fun showCrashUi(throwable: Throwable) {
-        try {
-            val scrollView = ScrollView(this)
-            val textView = TextView(this).apply {
-                text = "Active Group International - Startup Notice:\n\n${throwable.localizedMessage}\n\n${android.util.Log.getStackTraceString(throwable)}"
-                setTextColor(android.graphics.Color.RED)
-                setPadding(40, 80, 40, 80)
-                textSize = 14f
+            val stackTrace = android.util.Log.getStackTraceString(e)
+            val intent = Intent(this, CrashActivity::class.java).apply {
+                putExtra("crash_error", "Fatal setContent error:\n${e.javaClass.simpleName}: ${e.message}\n\n$stackTrace")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             }
-            scrollView.addView(textView)
-            setContentView(scrollView)
-        } catch (e: Throwable) {
-            // ignore
+            startActivity(intent)
+            finish()
         }
     }
 }

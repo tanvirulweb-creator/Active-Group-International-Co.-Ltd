@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import com.activegroupintl.app.ui.components.AppLogoImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Badge
@@ -151,8 +152,7 @@ fun AuthScreen(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.app_logo),
+            AppLogoImage(
                 contentDescription = "Active Logo",
                 modifier = Modifier.fillMaxSize()
             )

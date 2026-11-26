@@ -40,6 +40,7 @@ import com.activegroupintl.app.R
 import com.activegroupintl.app.data.model.Destination
 import com.activegroupintl.app.data.model.QuickAction
 import com.activegroupintl.app.data.repository.MockDataRepository
+import com.activegroupintl.app.ui.components.AppLogoImage
 import com.activegroupintl.app.ui.components.DestinationReel
 import com.activegroupintl.app.ui.components.PromoBanner
 import com.activegroupintl.app.ui.components.QuickActionsGrid
@@ -245,8 +246,7 @@ fun HomeScreen(
                         .padding(14.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.app_logo),
+                    AppLogoImage(
                         contentDescription = "Active Logo",
                         modifier = Modifier
                             .size(46.dp)

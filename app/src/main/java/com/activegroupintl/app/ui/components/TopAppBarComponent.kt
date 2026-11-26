@@ -57,8 +57,7 @@ fun TopAppBarComponent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Brand Logo & Subtext
-            Image(
-                painter = painterResource(id = R.drawable.app_logo),
+            AppLogoImage(
                 contentDescription = "Active Group International Logo",
                 modifier = Modifier
                     .size(42.dp)
