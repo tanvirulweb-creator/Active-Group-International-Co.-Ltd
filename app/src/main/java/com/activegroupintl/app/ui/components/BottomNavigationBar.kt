@@ -10,10 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.activegroupintl.app.ui.navigation.Screen
-import com.activegroupintl.app.ui.theme.BorderSubtle
 import com.activegroupintl.app.ui.theme.Primary
 import com.activegroupintl.app.ui.theme.SurfaceCard
-import com.activegroupintl.app.ui.theme.TextPrimary
 import com.activegroupintl.app.ui.theme.TextSecondary
 
 @Composable
@@ -26,7 +24,8 @@ fun BottomNavigationBar(
         tonalElevation = 6.dp
     ) {
         Screen.bottomNavItems.forEach { screen ->
-            val isSelected = currentRoute == screen.route
+            val route = screen.route
+            val isSelected = currentRoute == route
             NavigationBarItem(
                 selected = isSelected,
                 onClick = { onNavigate(screen) },
