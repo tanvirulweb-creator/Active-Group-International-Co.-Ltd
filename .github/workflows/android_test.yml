@@ -7,6 +7,9 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build & Test Android APK
@@ -43,8 +46,23 @@ jobs:
           echo '```text' >> $GITHUB_STEP_SUMMARY
           tail -n 60 build_output.log >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          LAST_LINES=$(tail -n 15 build_output.log | tr '\n' ' ' | sed 's/"//g')
-          echo "::error title=Gradle Compilation Failure::$LAST_LINES"
+          ERRORS=$(grep -E "^e: |FAILURE:" build_output.log | head -n 5 | tr '\n' ' ' | sed 's/"//g')
+          if [ -n "$ERRORS" ]; then
+            echo "::error title=Kotlin Compilation Errors::$ERRORS"
+          else
+            LAST_LINES=$(tail -n 15 build_output.log | tr '\n' ' ' | sed 's/"//g')
+            echo "::error title=Gradle Build Failure::$LAST_LINES"
+          fi
+
+      - name: Push Build Log to branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B build-log
+          git add -f build_output.log || true
+          git commit -m "Capture build output log" || true
+          git push origin build-log --force || true
 
       - name: Upload Build Log Artifact
         uses: actions/upload-artifact@v4

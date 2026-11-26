@@ -134,13 +134,13 @@ fun ProfileScreen(
 
     fun openDialer(phone: String) {
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
-        try { context.startActivity(intent) } catch (_: Exception) {}
+        try { context.startActivity(intent) } catch (e: Exception) {}
     }
 
     fun openWhatsApp() {
         val uri = Uri.parse("https://wa.me/8801335880011")
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        try { context.startActivity(intent) } catch (_: Exception) {}
+        try { context.startActivity(intent) } catch (e: Exception) {}
     }
 
     Column(

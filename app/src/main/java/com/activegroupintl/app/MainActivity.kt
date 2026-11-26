@@ -55,7 +55,7 @@ fun MainApp() {
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {
             context.startActivity(intent)
-        } catch (_: Exception) { }
+        } catch (e: Exception) { }
     }
 
     val showTopAndBottomBars = currentRoute != Screen.Auth.route
