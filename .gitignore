@@ -1,0 +1,30 @@
+# Built application files
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Files for the ART/Dalvik VM
+*.class
+
+# Java heap dumps
+*.hprof
+
+# Android Studio / IntelliJ IDEA
+.idea/
+.gradle/
+build/
+*/build/
+*.iml
+.DS_Store
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services
+google-services.json
