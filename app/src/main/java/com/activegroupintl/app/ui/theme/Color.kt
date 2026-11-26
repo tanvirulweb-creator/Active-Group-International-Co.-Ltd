@@ -31,6 +31,8 @@ val SurfaceCard = Color(0xFFFFFFFF)
 val SurfaceCanvas = Color(0xFFF8FAFC)
 val SurfaceContainer = Color(0xFFE9EDFF)
 val SurfaceContainerLow = Color(0xFFF1F3FF)
+val SurfaceContainerHigh = Color(0xFFE2E7F5)
+val SurfaceContainerHighest = Color(0xFFDCE2F0)
 val SurfaceDim = Color(0xFFD3DAEF)
 
 val BorderSubtle = Color(0xFFE2E8F0)

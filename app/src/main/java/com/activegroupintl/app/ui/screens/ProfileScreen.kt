@@ -222,7 +222,7 @@ fun ProfileScreen(
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     LegacyStatBox(
-                        icon = Icons.Default.CorporateFare,
+                        icon = Icons.Default.Apartment,
                         tint = Secondary,
                         value = "150+",
                         sub = "Partner Universities",
