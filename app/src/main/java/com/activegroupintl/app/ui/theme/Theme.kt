@@ -42,10 +42,14 @@ fun ActiveGroupTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as? Activity)?.window
-            window?.let {
-                it.statusBarColor = Surface.toArgb()
-                WindowCompat.getInsetsController(it, view).isAppearanceLightStatusBars = true
+            try {
+                val window = (view.context as? Activity)?.window
+                window?.let {
+                    it.statusBarColor = Surface.toArgb()
+                    WindowCompat.getInsetsController(it, view).isAppearanceLightStatusBars = true
+                }
+            } catch (e: Throwable) {
+                // Ignore any status bar styling issues on custom vendor ROMs
             }
         }
     }

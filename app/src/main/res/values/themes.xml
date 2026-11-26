@@ -1,6 +1,7 @@
 <resources>
     <style name="Theme.ActiveGroupInternational" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#F9F9FF</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

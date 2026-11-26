@@ -35,10 +35,19 @@ import com.activegroupintl.app.ui.theme.ActiveGroupTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ActiveGroupTheme {
-                MainApp()
+
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            android.util.Log.e("AGI_APP", "Uncaught exception on thread ${thread.name}", throwable)
+        }
+
+        try {
+            setContent {
+                ActiveGroupTheme {
+                    MainApp()
+                }
             }
+        } catch (e: Throwable) {
+            android.util.Log.e("AGI_APP", "Error setting content", e)
         }
     }
 }
