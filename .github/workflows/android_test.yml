@@ -24,16 +24,38 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-disabled: true
 
       - name: Grant Execute Permission for Gradlew
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        id: gradle_build
+        run: |
+          set -o pipefail
+          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee build_output.log
+
+      - name: Log Error Details to Annotations and Summary
+        if: failure()
+        run: |
+          echo "## ❌ Gradle Build Failure Log" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          tail -n 60 build_output.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          LAST_LINES=$(tail -n 15 build_output.log | tr '\n' ' ' | sed 's/"//g')
+          echo "::error title=Gradle Compilation Failure::$LAST_LINES"
+
+      - name: Upload Build Log Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: build_output.log
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
-        if: always()
+        if: success()
         with:
           name: ActiveGroupInternational-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
