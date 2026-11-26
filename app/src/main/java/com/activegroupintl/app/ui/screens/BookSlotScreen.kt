@@ -22,7 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apartment
-import androidx.compose.material.icons.filled.CalendarAddOn
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Celebration
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
@@ -1101,7 +1101,7 @@ fun BookSlotScreen(
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Icon(imageVector = Icons.Default.CalendarAddOn, contentDescription = null, modifier = Modifier.size(18.dp))
+            Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "Confirm Booking (No Payment Required)", fontWeight = FontWeight.Bold, fontSize = 14.sp)
         }

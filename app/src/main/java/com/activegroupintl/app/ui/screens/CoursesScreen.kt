@@ -43,7 +43,7 @@ import androidx.compose.material.icons.filled.LaptopChromebook
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.MilitaryTech
-import androidx.compose.material.icons.filled.NestClockFarsightAnalog
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.RecordVoiceOver
@@ -344,7 +344,7 @@ fun CoursesScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        TrialFeatureBox(icon = Icons.Default.NestClockFarsightAnalog, tint = Secondary, topText = "60 Minutes", subText = "Hiragana / Katakana", modifier = Modifier.weight(1f))
+                        TrialFeatureBox(icon = Icons.Default.Schedule, tint = Secondary, topText = "60 Minutes", subText = "Hiragana / Katakana", modifier = Modifier.weight(1f))
                         TrialFeatureBox(icon = Icons.Default.Draw, tint = Primary, topText = "Stroke Guide", subText = "Digital Worksheets", modifier = Modifier.weight(1f))
                         TrialFeatureBox(icon = Icons.Default.FlightTakeoff, tint = Tertiary, topText = "Visa Brief", subText = "Gunma Pathway", modifier = Modifier.weight(1f))
                     }
