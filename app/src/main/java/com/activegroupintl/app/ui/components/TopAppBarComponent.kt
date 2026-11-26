@@ -1,5 +1,6 @@
 package com.activegroupintl.app.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,9 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.activegroupintl.app.R
 import com.activegroupintl.app.ui.theme.Primary
 import com.activegroupintl.app.ui.theme.Secondary
 import com.activegroupintl.app.ui.theme.SurfaceCanvas
@@ -54,20 +57,14 @@ fun TopAppBarComponent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Brand Logo & Subtext
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.app_logo),
+                contentDescription = "Active Group International Logo",
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(42.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Primary),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "AGI",
-                    color = Color.White,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 14.sp
-                )
-            }
+                    .background(Color.White)
+            )
 
             Spacer(modifier = Modifier.width(10.dp))
 

@@ -2,6 +2,7 @@ package com.activegroupintl.app.ui.screens
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -60,6 +61,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -67,6 +69,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.activegroupintl.app.R
 import com.activegroupintl.app.ui.theme.BadgeAdmission
 import com.activegroupintl.app.ui.theme.BadgeAdmissionBg
 import com.activegroupintl.app.ui.theme.BadgeSuccessBg
@@ -141,28 +144,18 @@ fun AuthScreen(
         // 1. Brand Header & Heritage Milestone
         Box(
             modifier = Modifier
-                .size(width = 130.dp, height = 90.dp)
-                .clip(RoundedCornerShape(14.dp))
+                .size(width = 140.dp, height = 100.dp)
+                .clip(RoundedCornerShape(16.dp))
                 .background(Color.White)
-                .border(1.dp, BorderSubtle, RoundedCornerShape(14.dp)),
+                .border(1.dp, BorderSubtle, RoundedCornerShape(16.dp))
+                .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "AGI",
-                    color = Primary,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 32.sp,
-                    letterSpacing = 1.sp
-                )
-                Text(
-                    text = "GLOBAL",
-                    color = Secondary,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
-                    letterSpacing = 2.sp
-                )
-            }
+            Image(
+                painter = painterResource(id = R.drawable.app_logo),
+                contentDescription = "Active Logo",
+                modifier = Modifier.fillMaxSize()
+            )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
