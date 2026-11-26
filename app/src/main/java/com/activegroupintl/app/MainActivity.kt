@@ -3,9 +3,10 @@ package com.activegroupintl.app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -33,11 +34,16 @@ import com.activegroupintl.app.ui.screens.ProfileScreen
 import com.activegroupintl.app.ui.theme.ActiveGroupTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Safety uncaught exception handler: if anything crashes, show diagnostic on screen
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             android.util.Log.e("AGI_APP", "Uncaught exception on thread ${thread.name}", throwable)
+            runOnUiThread {
+                showCrashUi(throwable)
+            }
         }
 
         try {
@@ -47,7 +53,24 @@ class MainActivity : ComponentActivity() {
                 }
             }
         } catch (e: Throwable) {
-            android.util.Log.e("AGI_APP", "Error setting content", e)
+            android.util.Log.e("AGI_APP", "Fatal setContent error", e)
+            showCrashUi(e)
+        }
+    }
+
+    private fun showCrashUi(throwable: Throwable) {
+        try {
+            val scrollView = ScrollView(this)
+            val textView = TextView(this).apply {
+                text = "Active Group International - Startup Notice:\n\n${throwable.localizedMessage}\n\n${android.util.Log.getStackTraceString(throwable)}"
+                setTextColor(android.graphics.Color.RED)
+                setPadding(40, 80, 40, 80)
+                textSize = 14f
+            }
+            scrollView.addView(textView)
+            setContentView(scrollView)
+        } catch (e: Throwable) {
+            // ignore
         }
     }
 }
