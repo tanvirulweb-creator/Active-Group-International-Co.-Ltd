@@ -2,6 +2,7 @@ package com.activegroupintl.app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
@@ -31,24 +32,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.activegroupintl.app.data.model.SuccessStory
-import com.activegroupintl.app.ui.theme.BadgeAdmission
-import com.activegroupintl.app.ui.theme.BadgeAdmissionBg
-import com.activegroupintl.app.ui.theme.BorderSubtle
+import com.activegroupintl.app.ui.theme.BadgeSuccessBg
 import com.activegroupintl.app.ui.theme.Primary
 import com.activegroupintl.app.ui.theme.Secondary
 import com.activegroupintl.app.ui.theme.SurfaceCard
-import com.activegroupintl.app.ui.theme.SurfaceContainer
 import com.activegroupintl.app.ui.theme.TextPrimary
 import com.activegroupintl.app.ui.theme.TextSecondary
-import com.activegroupintl.app.ui.theme.TextTertiary
 
 @Composable
 fun SuccessStoriesList(stories: List<SuccessStory>) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+    val scrollState = rememberScrollState()
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(scrollState),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        stories.forEach { story ->
+        stories.take(5).forEach { story ->
             SuccessStoryCardItem(story = story)
         }
     }
@@ -58,110 +59,84 @@ fun SuccessStoriesList(stories: List<SuccessStory>) {
 fun SuccessStoryCardItem(story: SuccessStory) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .border(1.dp, BorderSubtle, RoundedCornerShape(12.dp)),
+            .width(260.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, Color(0xFFF1F5F9), RoundedCornerShape(16.dp)),
         colors = CardDefaults.cardColors(containerColor = SurfaceCard),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(14.dp)
+                .fillMaxWidth()
         ) {
-            // Avatar & Flag Badge
-            Box(contentAlignment = Alignment.BottomEnd) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Box(
                     modifier = Modifier
-                        .size(46.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
-                        .background(SurfaceContainer),
+                        .background(Color(0xFFF1F5F9)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
                         tint = Secondary,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                 }
 
-                Text(
-                    text = story.countryFlag,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 0.dp, end = 0.dp)
-                )
-            }
+                Spacer(modifier = Modifier.width(10.dp))
 
-            Spacer(modifier = Modifier.width(12.dp))
-
-            // Details
-            Column(modifier = Modifier.weight(1f)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = story.studentName,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
+                        fontSize = 13.sp,
                         color = TextPrimary
                     )
-
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(BadgeAdmissionBg)
-                            .padding(horizontal = 8.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = story.status,
-                            color = BadgeAdmission,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 10.sp
-                        )
-                    }
+                    Text(
+                        text = story.country,
+                        fontSize = 11.sp,
+                        color = TextSecondary
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(2.dp))
-
-                Text(
-                    text = story.university,
-                    color = TextSecondary,
-                    fontSize = 12.sp
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(BadgeSuccessBg)
+                        .padding(horizontal = 8.dp, vertical = 3.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Icon(
-                        imageVector = Icons.Default.CalendarMonth,
+                        imageVector = Icons.Default.Check,
                         contentDescription = null,
                         tint = Primary,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(11.dp)
                     )
-                    Spacer(modifier = Modifier.width(3.dp))
+                    Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = story.intake,
+                        text = "Granted",
                         color = Primary,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(text = "•", color = TextTertiary, fontSize = 11.sp)
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = story.degree,
-                        color = Secondary,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 10.sp
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = story.university,
+                color = TextSecondary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Medium,
+                maxLines = 1
+            )
         }
     }
 }

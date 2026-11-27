@@ -1,6 +1,7 @@
 package com.activegroupintl.app.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,41 +19,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.activegroupintl.app.data.model.StatItem
 import com.activegroupintl.app.ui.theme.Primary
-import com.activegroupintl.app.ui.theme.PrimaryContainer
-import com.activegroupintl.app.ui.theme.Secondary
-import com.activegroupintl.app.ui.theme.SurfaceContainer
-import com.activegroupintl.app.ui.theme.Tertiary
-import com.activegroupintl.app.ui.theme.TextSecondary
+import com.activegroupintl.app.ui.theme.TextPrimary
+import com.activegroupintl.app.ui.theme.TextTertiary
 
 @Composable
 fun StatsRow(stats: List<StatItem>) {
-    val statColors = listOf(Primary, Secondary, PrimaryContainer, Tertiary)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(SurfaceContainer)
-            .padding(vertical = 12.dp, horizontal = 8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.White)
+            .border(1.dp, Color(0xFFF1F5F9), RoundedCornerShape(16.dp))
+            .padding(vertical = 14.dp, horizontal = 12.dp),
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        stats.forEachIndexed { index, stat ->
-            val color = statColors.getOrElse(index) { Primary }
+        stats.forEach { stat ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = stat.value,
-                    color = color,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 18.sp
+                    color = Primary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
                 )
                 Text(
                     text = stat.label,
-                    color = TextSecondary,
+                    color = TextTertiary,
                     fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Normal
                 )
             }
         }
