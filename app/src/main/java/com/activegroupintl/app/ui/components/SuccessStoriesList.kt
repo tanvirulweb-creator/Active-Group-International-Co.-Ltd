@@ -99,9 +99,10 @@ fun SuccessStoryCardItem(story: SuccessStory) {
                         color = TextPrimary
                     )
                     Text(
-                        text = story.country,
+                        text = story.degree,
                         fontSize = 11.sp,
-                        color = TextSecondary
+                        color = TextSecondary,
+                        maxLines = 1
                     )
                 }
 
@@ -112,13 +113,11 @@ fun SuccessStoryCardItem(story: SuccessStory) {
                         .padding(horizontal = 8.dp, vertical = 3.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = null,
-                        tint = Primary,
-                        modifier = Modifier.size(11.dp)
+                    Text(
+                        text = story.countryFlag,
+                        fontSize = 11.sp
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
+                    Spacer(modifier = Modifier.width(3.dp))
                     Text(
                         text = "Granted",
                         color = Primary,
